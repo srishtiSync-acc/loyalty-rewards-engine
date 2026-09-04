@@ -26,15 +26,15 @@ explicit edge-case coverage.
 
 **Purpose**: Initialize the lightweight Python package, local data layout, and test configuration.
 
-- [ ] T001 Create the Python package layout in `src/loyalty_rewards/`, `tests/unit/`,
+- [X] T001 Create the Python package layout in `src/loyalty_rewards/`, `tests/unit/`,
   `tests/integration/`, `data/`, and `.github/agents/` according to `plan.md` (FR-025).
-- [ ] T002 Create `pyproject.toml` with Python 3.11+ metadata, Pydantic v2 runtime dependency,
+- [X] T002 Create `pyproject.toml` with Python 3.11+ metadata, Pydantic v2 runtime dependency,
   pytest development dependency, src-layout configuration, and a local demo entry point (FR-025).
-- [ ] T003 [P] Create `src/loyalty_rewards/__init__.py` with the public package surface reserved for
+- [X] T003 [P] Create `src/loyalty_rewards/__init__.py` with the public package surface reserved for
   the engine operations in the plan (FR-022).
-- [ ] T004 [P] Create `tests/conftest.py` with reusable isolated member, rules, and store fixtures
+- [X] T004 [P] Create `tests/conftest.py` with reusable isolated member, rules, and store fixtures
   for deterministic unit and integration tests (FR-024).
-- [ ] T005 [P] Create `README.md` with project purpose, local Windows/VS Code prerequisites, and
+- [X] T005 Create `README.md` with project purpose, local Windows/VS Code prerequisites, and
   a placeholder map to the quickstart workflow (FR-025, SC-006).
 
 ## Phase 2: Foundational (Blocking Prerequisites)
@@ -44,31 +44,31 @@ explicit edge-case coverage.
 **Checkpoint**: No user-story implementation begins until these shared contracts and invariants are
 available.
 
-- [ ] T006 Define Pydantic v2 enums and domain models in `src/loyalty_rewards/models.py` for
+- [X] T006 Define Pydantic v2 enums and domain models in `src/loyalty_rewards/models.py` for
   Member, TierRule, Activity, Promotion, Reward, RulesConfiguration, Redemption, Transaction,
   AuditEvent, and SafeMemberView (FR-001, FR-018).
-- [ ] T007 [P] Add model validation tests in `tests/unit/test_models.py` for non-negative balances,
+- [X] T007 [P] Add model validation tests in `tests/unit/test_models.py` for non-negative balances,
   positive amounts/costs/multipliers, supported activity types, unique identifiers, and safe
   lookup fields (FR-001, FR-002, FR-008, FR-021).
-- [ ] T008 Create the representative local dataset in `data/members.json` with GOLD multiplier 1.25,
+- [X] T008 Create the representative local dataset in `data/members.json` with GOLD multiplier 1.25,
   award-night 15000, suite 40000, `human_gate_redeem_over` 30000, tier thresholds, ROOM and
   FLIGHT activities, active EARN_MULTIPLIER promotion, and a member with private email data
   (FR-003, FR-008, FR-011, FR-021).
-- [ ] T009 Implement validated JSON loading in `src/loyalty_rewards/store.py`, including controlled
+- [X] T009 Implement validated JSON loading in `src/loyalty_rewards/store.py`, including controlled
   errors for missing, malformed, contradictory, or invalid rules configuration (FR-001, FR-025).
-- [ ] T010 [P] Add store and dataset tests in `tests/unit/test_store.py` proving the dataset loads,
+- [X] T010 [P] Add store and dataset tests in `tests/unit/test_store.py` proving the dataset loads,
   required configured values are present, invalid JSON/configuration fails explicitly, and email is
   retained only in internal data (FR-011, FR-021).
-- [ ] T011 Implement in-memory member, rules, redemption, and audit state access in
+- [X] T011 Implement in-memory member, rules, redemption, and audit state access in
   `src/loyalty_rewards/store.py` with copy/replace behavior that prevents accidental mutation
   during pure calculations (FR-019, FR-023).
-- [ ] T012 [P] Implement audit event construction and safe serialization in
+- [X] T012 [P] Implement audit event construction and safe serialization in
   `src/loyalty_rewards/audit.py`, including member ID, operation, signed delta, before/after
   balances, reason, outcome, correlation ID, and safe rule context (FR-017, FR-018, FR-021).
-- [ ] T013 [P] Add audit primitive tests in `tests/unit/test_audit.py` for balance-delta invariants,
+- [X] T013 [P] Add audit primitive tests in `tests/unit/test_audit.py` for balance-delta invariants,
   required explanation fields, immutable/safe output, and exclusion of email and unnecessary PII
   (FR-017, FR-018, FR-021).
-- [ ] T014 Create shared error/result types and explicit operation outcome conventions in
+- [X] T014 Create shared error/result types and explicit operation outcome conventions in
   `src/loyalty_rewards/models.py` for rejected, pending, committed, and not-found outcomes
   without using silent fallback values (FR-009, FR-012, FR-019).
 
@@ -83,36 +83,36 @@ an EARN audit event without redemption or agents.
 
 ### Tests for User Story 1
 
-- [ ] T015 [P] [US1] Add AC-1 unit test in `tests/unit/test_rules.py` proving GOLD 1.25 earning
+- [X] T015 [P] [US1] Add AC-1 unit test in `tests/unit/test_rules.py` proving GOLD 1.25 earning
   calculates `100 x 10 x 1.25 = 1250` base points before promotions (FR-003, AC-1).
-- [ ] T016 [P] [US1] Add AC-2 promotion tests in `tests/unit/test_promotions.py` proving an active
+- [X] T016 [P] [US1] Add AC-2 promotion tests in `tests/unit/test_promotions.py` proving an active
   ROOM EARN_MULTIPLIER applies once and a non-stackable promotion is not stacked (FR-004, FR-005,
   FR-006, AC-2).
-- [ ] T017 [P] [US1] Add deterministic repeated-calculation tests in `tests/unit/test_rules.py`
+- [X] T017 [P] [US1] Add deterministic repeated-calculation tests in `tests/unit/test_rules.py`
   proving identical member/activity/promotion/rules inputs return identical results (FR-023, SC-001).
-- [ ] T018 [P] [US1] Add earning edge-case tests in `tests/unit/test_rules.py` for unsupported
+- [X] T018 [P] [US1] Add earning edge-case tests in `tests/unit/test_rules.py` for unsupported
   activity, non-positive USD amount, inactive/ineligible promotion, and contradictory configuration
   proving failed operations leaving state unchanged. Include a fractional-points boundary case
   using Decimal USD and multiplier inputs to prove the final result is rounded once with
   ROUND_HALF_UP, with no intermediate rounding (FR-002, FR-003, FR-004, FR-019, FR-023).
-- [ ] T019 [US1] Add earning workflow integration tests in `tests/integration/test_earning.py` for
+- [X] T019 [US1] Add earning workflow integration tests in `tests/integration/test_earning.py` for
   successful balance and lifetime-point mutation plus one EARN audit event (FR-007, FR-017, SC-002).
 
 ### Implementation for User Story 1
 
-- [ ] T020 [P] [US1] Implement pure base-point calculation and earning validation in
+- [X] T020 [P] [US1] Implement pure base-point calculation and earning validation in
   `src/loyalty_rewards/rules.py` using Decimal inputs, configured points-per-USD and tier
   multiplier, and one final ROUND_HALF_UP conversion to an integer (FR-002, FR-003, AC-1).
-- [ ] T021 [P] [US1] Implement pure promotion eligibility, stable ordering, multiplier application,
+- [X] T021 [P] [US1] Implement pure promotion eligibility, stable ordering, multiplier application,
   and event-scoped non-stackable tracking in `src/loyalty_rewards/rules.py` (FR-004, FR-005,
   FR-006, AC-2).
-- [ ] T022 [US1] Implement `apply_promotions(activity, member, rules)` in
+- [X] T022 [US1] Implement `apply_promotions(activity, member, rules)` in
   `src/loyalty_rewards/engine.py` or the rules boundary defined by `contracts/engine-contract.md`
   as a non-mutating operation returning applied IDs and explanation (FR-004, FR-006).
-- [ ] T023 [US1] Implement `earn(member_id, activity)` in `src/loyalty_rewards/engine.py`, applying
+- [X] T023 [US1] Implement `earn(member_id, activity)` in `src/loyalty_rewards/engine.py`, applying
   pure calculations first and mutating balance/lifetime points only after validation succeeds
   (FR-007, FR-019, AC-1, AC-2).
-- [ ] T024 [US1] Integrate `audit.py` with the successful earn path in
+- [X] T024 [US1] Integrate `audit.py` with the successful earn path in
   `src/loyalty_rewards/engine.py` so every points mutation records before/after balances, delta,
   reason, promotion context, and member ID (FR-017, FR-018, SC-002).
 
@@ -130,36 +130,36 @@ corresponding audit records.
 
 ### Tests for User Story 2
 
-- [ ] T025 [P] [US2] Add AC-3 integration test in `tests/integration/test_redemption.py` proving
+- [X] T025 [P] [US2] Add AC-3 integration test in `tests/integration/test_redemption.py` proving
   42500 points minus 15000 commits to 27500 and creates a REDEEM transaction (FR-008, FR-010, AC-3).
-- [ ] T026 [P] [US2] Add AC-4 integration test in `tests/integration/test_redemption.py` proving
+- [X] T026 [P] [US2] Add AC-4 integration test in `tests/integration/test_redemption.py` proving
   insufficient balance returns the required rejection and leaves balance and successful audit
   mutations unchanged (FR-009, FR-019, AC-4).
-- [ ] T027 [P] [US2] Add AC-6 integration tests in `tests/integration/test_approval.py` proving a
+- [X] T027 [P] [US2] Add AC-6 integration tests in `tests/integration/test_approval.py` proving a
   redemption over configured 30000 enters pending approval with no deduction and cannot commit
   until explicit approval (FR-011, FR-012, FR-013, AC-6, SC-004).
-- [ ] T028 [P] [US2] Add approval rejection and idempotency tests in `tests/integration/test_approval.py`
+- [X] T028 [P] [US2] Add approval rejection and idempotency tests in `tests/integration/test_approval.py`
   proving explicit rejection preserves balance and duplicate approve/reject/commit attempts cannot
   deduct twice (FR-013, FR-019).
-- [ ] T029 [P] [US2] Add redemption edge-case tests in `tests/unit/test_redemption_rules.py` for
+- [X] T029 [P] [US2] Add redemption edge-case tests in `tests/unit/test_redemption_rules.py` for
   unknown reward, non-positive cost, exact threshold boundary, and malformed configured threshold
   (FR-008, FR-011, FR-019).
-- [ ] T030 [US2] Add audit integration assertions in `tests/integration/test_redemption.py` and
+- [X] T030 [US2] Add audit integration assertions in `tests/integration/test_redemption.py` and
   `tests/integration/test_approval.py` for successful REDEEM, approval decision, and no successful
   mutation event on rejected/pending operations (FR-017, FR-018, SC-002, SC-003).
 
 ### Implementation for User Story 2
 
-- [ ] T031 [P] [US2] Implement pure reward resolution, sufficient-balance validation, and
+- [X] T031 [P] [US2] Implement pure reward resolution, sufficient-balance validation, and
   threshold classification in `src/loyalty_rewards/rules.py` using configured reward costs and
   `human_gate_redeem_over` (FR-008, FR-009, FR-011).
-- [ ] T032 [US2] Implement `redeem(member_id, reward_code)` in `src/loyalty_rewards/engine.py`
+- [X] T032 [US2] Implement `redeem(member_id, reward_code)` in `src/loyalty_rewards/engine.py`
   with explicit `REJECTED`, `PENDING_APPROVAL`, and `COMMITTED` results and no mutation before
   commit (FR-009, FR-012, FR-019, AC-4, AC-6).
-- [ ] T033 [US2] Implement `approve_redemption(redemption_id)` and
+- [X] T033 [US2] Implement `approve_redemption(redemption_id)` and
   `reject_redemption(redemption_id)` in `src/loyalty_rewards/engine.py` with one-way state
   transitions, explicit decisions, and duplicate-operation protection (FR-013, FR-019).
-- [ ] T034 [US2] Add committed redemption deduction and REDEEM audit transaction creation in
+- [X] T034 [US2] Add committed redemption deduction and REDEEM audit transaction creation in
   `src/loyalty_rewards/engine.py` using the audit primitive and balance invariant (FR-010,
   FR-017, FR-018, AC-3).
 
@@ -176,15 +176,15 @@ inputs, and invoke the custom agent against the same engine result.
 
 ### Tests for User Story 3
 
-- [ ] T035 [P] [US3] Add AC-5 tier boundary tests in `tests/unit/test_tiers.py` for below-threshold,
+- [X] T035 [P] [US3] Add AC-5 tier boundary tests in `tests/unit/test_tiers.py` for below-threshold,
   exact-threshold, and above-threshold lifetime points selecting the configured tier (FR-014, AC-5).
-- [ ] T036 [P] [US3] Add deterministic tier repetition tests in `tests/unit/test_tiers.py` proving
+- [X] T036 [P] [US3] Add deterministic tier repetition tests in `tests/unit/test_tiers.py` proving
   unchanged lifetime points and configuration return the same tier and explanation (FR-014, FR-015,
   FR-023, AC-5).
-- [ ] T037 [P] [US3] Add tier state integration tests in `tests/integration/test_tiers.py` proving
+- [X] T037 [P] [US3] Add tier state integration tests in `tests/integration/test_tiers.py` proving
   recalc updates tier only, does not change points balance, and records any configured tier event
   safely (FR-014, FR-017, FR-019).
-- [ ] T038 [P] [US3] Add static custom-agent contract tests in
+- [X] T038 [P] [US3] Add static custom-agent contract tests in
   `tests/integration/test_tier_agent.py` that read `.github/agents/tier-recalculation.agent.md`
   and verify source-of-truth delegation, no invented thresholds/multipliers, no direct balance
   mutation, and PII-safety instructions. In the same test module, add a mocked delegation test
@@ -195,13 +195,13 @@ inputs, and invoke the custom agent against the same engine result.
 
 ### Implementation for User Story 3
 
-- [ ] T039 [US3] Implement pure `calculate_tier(lifetime_points, tier_rules)` in
+- [X] T039 [US3] Implement pure `calculate_tier(lifetime_points, tier_rules)` in
   `src/loyalty_rewards/rules.py` with explicit configured boundary semantics and no agent dependency
   (FR-014, FR-015, AC-5).
-- [ ] T040 [US3] Implement `recalc_tier(member_id)` in `src/loyalty_rewards/engine.py`, updating
+- [X] T040 [US3] Implement `recalc_tier(member_id)` in `src/loyalty_rewards/engine.py`, updating
   only the member tier from the pure result and returning old/new tier, threshold, and explanation
   (FR-014, FR-015, FR-019).
-- [ ] T041 [US3] Create `.github/agents/tier-recalculation.agent.md` with instructions to retrieve
+- [X] T041 [US3] Create `.github/agents/tier-recalculation.agent.md` with instructions to retrieve
   safe member data, call deterministic tier recalculation, explain returned results, never invent
   thresholds/multipliers, and never mutate balances (FR-016, FR-022).
 
@@ -218,22 +218,22 @@ prove email is absent while required operational fields remain available.
 
 ### Tests for User Story 4
 
-- [ ] T042 [P] [US4] Add safe projection tests in `tests/unit/test_adapters.py` proving
+- [X] T042 [P] [US4] Add safe projection tests in `tests/unit/test_adapters.py` proving
   `SafeMemberView` excludes email and unnecessary PII while retaining required member ID, tier,
   balance, and lifetime points fields (FR-020, FR-021, AC privacy scenarios).
-- [ ] T043 [P] [US4] Add unknown-member and response-serialization tests in
+- [X] T043 [P] [US4] Add unknown-member and response-serialization tests in
   `tests/integration/test_member_lookup.py` for controlled not-found behavior and no private data
   leakage in JSON/text output (FR-020, FR-021).
-- [ ] T044 [P] [US4] Add log/demo privacy tests in `tests/integration/test_privacy.py` proving audit,
+- [X] T044 [P] [US4] Add log/demo privacy tests in `tests/integration/test_privacy.py` proving audit,
   agent-facing, and demonstration output does not contain member email or unnecessary PII (FR-018,
   FR-021, SC-007).
 
 ### Implementation for User Story 4
 
-- [ ] T045 [US4] Implement safe member projection and `lookup_member(member_id)` in
+- [X] T045 [US4] Implement safe member projection and `lookup_member(member_id)` in
   `src/loyalty_rewards/adapters.py`, reading through the store and returning only SafeMemberView
   fields (FR-020, FR-021).
-- [ ] T046 [US4] Route audit and operation explanations through safe serialization in
+- [X] T046 [US4] Route audit and operation explanations through safe serialization in
   `src/loyalty_rewards/audit.py` and `src/loyalty_rewards/adapters.py`, preventing accidental email
   or raw-member dumps (FR-018, FR-021).
 
@@ -249,19 +249,19 @@ observe earning, promotion, redemptions, approval, tier recalculation, safe look
 
 ### Tests for User Story 5
 
-- [ ] T047 [US5] Add an end-to-end demonstration test in `tests/integration/test_demo.py` that runs
+- [X] T047 [US5] Add an end-to-end demonstration test in `tests/integration/test_demo.py` that runs
   the local workflow and asserts earning, promotion, successful and rejected redemption, pending and
   approved high-value redemption, tier recalculation, audit output, and PII exclusion (FR-025,
   SC-006, SC-007).
 
 ### Implementation for User Story 5
 
-- [ ] T048 [US5] Implement `src/loyalty_rewards/demo.py` to load `data/members.json` and print the
+- [X] T048 [US5] Implement `src/loyalty_rewards/demo.py` to load `data/members.json` and print the
   required workflow steps and safe outcomes without exposing email or unnecessary PII (FR-025,
   SC-006, SC-007).
-- [ ] T049 [US5] Update `README.md` with Windows PowerShell setup, pytest command, demo command,
+- [X] T049 [US5] Update `README.md` with Windows PowerShell setup, pytest command, demo command,
   expected outcomes, architecture boundaries, and optional MCP status (FR-025, SC-006).
-- [ ] T050 [US5] Align `specs/001-loyalty-rewards-engine/quickstart.md` with the implemented local
+- [X] T050 [US5] Align `specs/001-loyalty-rewards-engine/quickstart.md` with the implemented local
   commands and document any intentionally omitted optional integration (SC-006, FR-025).
 
 **Checkpoint**: The mandatory project is demonstrable locally without database, cloud, web frontend,
@@ -277,32 +277,32 @@ shape and PII exclusion, then remove/disable the adapter and rerun all mandatory
 
 ### Tests for Optional MCP
 
-- [ ] T051 [P] Add optional MCP contract tests in `tests/integration/test_mcp_lookup.py` for known and
+- [X] T051 [P] Add optional MCP contract tests in `tests/integration/test_mcp_lookup.py` for known and
   unknown members, safe fields, controlled errors, and no email/PII (FR-020, FR-021).
-- [ ] T052 [P] Add optional dependency-isolation test in `tests/integration/test_mcp_optional.py`
+- [X] T052 [P] Add optional dependency-isolation test in `tests/integration/test_mcp_optional.py`
   proving mandatory engine tests pass when the MCP adapter is unavailable (FR-025, SC-005).
 
 ### Implementation for Optional MCP
 
-- [ ] T053 Implement the optional lookup tool adapter in `src/loyalty_rewards/adapters.py` or a
+- [X] T053 Implement the optional lookup tool adapter in `src/loyalty_rewards/adapters.py` or a
   dedicated `src/loyalty_rewards/mcp_lookup.py` using `lookup_member`, without business-rule logic
   or direct balance mutation (FR-020, FR-022).
-- [ ] T054 Document optional MCP setup, response schema, PII boundary, and omission fallback in
+- [X] T054 Document optional MCP setup, response schema, PII boundary, and omission fallback in
   `README.md` and `specs/001-loyalty-rewards-engine/contracts/external-adapters.md` (FR-020, FR-021).
 
 ## Phase 9: Polish & Cross-Cutting Concerns
 
 **Purpose**: Run the complete quality gate, preserve traceability, and verify the two-hour scope.
 
-- [ ] T055 [P] Add coverage/traceability comments or test IDs in `tests/` mapping AC-1 through AC-6
+- [X] T055 [P] Add coverage/traceability comments or test IDs in `tests/` mapping AC-1 through AC-6
   and core FRs to executable tests (FR-024, Constitution X).
-- [ ] T056 [P] Review all public result, audit, demo, agent, and optional adapter outputs for
+- [X] T056 [P] Review all public result, audit, demo, agent, and optional adapter outputs for
   determinism, safe PII minimization, and absence of duplicated business rules (Constitution I,
   V, VIII).
-- [ ] T057 Run `python -m pytest` and the quickstart demonstration from `README.md`; fix only
+- [X] T057 Run `python -m pytest` and the quickstart demonstration from `README.md`; fix only
   failures within the specified lightweight scope and record results in the implementation notes
   (SC-005, SC-006).
-- [ ] T058 Review `specs/001-loyalty-rewards-engine/plan.md`, `spec.md`, `data-model.md`,
+- [X] T058 Review `specs/001-loyalty-rewards-engine/plan.md`, `spec.md`, `data-model.md`,
   `contracts/`, `quickstart.md`, and `tasks.md` for requirement-to-task-to-test traceability
   before declaring the feature complete (FR-024, Constitution X).
 

@@ -57,3 +57,12 @@ store and contains no earning, promotion, redemption, or tier business-rule impl
 
 MCP is optional: the project remains fully functional and all acceptance criteria pass if this
 adapter is omitted.
+
+### Local MCP Server
+
+`src/loyalty_rewards/mcp_server.py` provides the optional stdio MCP server. Its only tool is
+`member_lookup(member_id)`, which delegates to the existing `adapters.lookup_member()` function.
+Install it with `python -m pip install -e ".[mcp]"` and run it with
+`python -m loyalty_rewards.mcp_server`. The server returns the safe projection or a controlled
+not-found error and never exposes email. It contains no earning, promotion, redemption, or tier
+business-rule logic.

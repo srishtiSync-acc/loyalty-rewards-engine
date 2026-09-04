@@ -1,0 +1,22 @@
+{
+  "rules": {
+    "base_points_per_usd": "10",
+    "human_gate_redeem_over": 30000,
+    "eligible_activity_types": ["ROOM", "FLIGHT"],
+    "tier_rules": [
+      {"code": "SILVER", "lifetime_threshold": 0, "earn_multiplier": "1"},
+      {"code": "GOLD", "lifetime_threshold": 50000, "earn_multiplier": "1.25"}
+    ],
+    "promotion_rules": [
+      {"promotion_id": "ROOM-BONUS", "active": true, "activity_types": ["ROOM"], "member_tiers": ["GOLD"], "behavior": "EARN_MULTIPLIER", "multiplier": "2", "stackable": false}
+    ],
+    "reward_rules": [
+      {"reward_code": "AWARD_NIGHT", "points_cost": 15000},
+      {"reward_code": "SUITE", "points_cost": 40000}
+    ]
+  },
+  "members": [
+    {"member_id": "member-123", "display_name": "Example Member", "tier_code": "GOLD", "points_balance": 42500, "lifetime_points": 75000, "email": "private@example.com"},
+    {"member_id": "member-silver", "display_name": "Silver Member", "tier_code": "SILVER", "points_balance": 1000, "lifetime_points": 1000}
+  ]
+}
